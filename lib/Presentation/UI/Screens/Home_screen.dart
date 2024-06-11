@@ -23,10 +23,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    categoryController.getCategory();
-    productPopularController.getPopularProduct();
-
-
     // TODO: implement initState
     super.initState();
   }
@@ -34,6 +30,7 @@ class _HomePageState extends State<HomePage> {
   CategoryController categoryController = Get.put(CategoryController());
   HomeSliderController sliderController = Get.put(HomeSliderController());
   ProductController productPopularController = Get.put(ProductController());
+  ProductController productSpecialController = Get.put(ProductController());
 
   double padInt = 10;
 
@@ -149,12 +146,18 @@ class _HomePageState extends State<HomePage> {
                 height: 180,
                 child: GetBuilder<ProductController>(
                     builder: (productController) {
+                      if (productController.productInprogress) {
+                        return Center(child: CircularProgressIndicator());
+                      }
                       return ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: productPopularController.productPopulerModel.data?.length??0,
+                          itemCount: productPopularController
+                              .productPopulerModel.data?.length ??
+                              0,
                           itemBuilder: (context, index) {
                             return ProductCard(
-                              productpopuler:productController.productPopulerModel.data![index],
+                              productpopuler: productController
+                                  .productPopulerModel.data![index],
                             );
                           });
                     }),
@@ -167,12 +170,22 @@ class _HomePageState extends State<HomePage> {
 
               SizedBox(
                 height: 180,
-                // child: ListView.builder(
-                //     scrollDirection: Axis.horizontal,
-                //     itemCount: 10,
-                //     itemBuilder: (context, index) {
-                //       return const ProductCard();
-                //     }),
+                child:
+                GetBuilder<ProductController>(builder: (specialController) {
+                  if (specialController.productspecialInprogress) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: productSpecialController.productSpecialModel
+                          .data?.length,
+                      itemBuilder: (context, index) {
+                        return ProductCard(
+                          productpopuler: specialController
+                              .productSpecialModel.data![index],
+                        );
+                      });
+                }),
               ),
               SelectHeader(
                 title: 'New',
@@ -181,12 +194,16 @@ class _HomePageState extends State<HomePage> {
 
               SizedBox(
                 height: 180,
-                // child: ListView.builder(
-                //     scrollDirection: Axis.horizontal,
-                //     itemCount: 10,
-                //     itemBuilder: (context, index) {
-                //       return const ProductCard();
-                //     }),
+                child: GetBuilder<ProductController>(builder: (newProduct) {
+                  return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                        return ProductCard(
+                          productpopuler: newProduct.productSpecialModel.data![index],
+                        );
+                      });
+                }),
               )
             ],
           ),

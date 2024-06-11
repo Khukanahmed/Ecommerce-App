@@ -7,6 +7,7 @@ import 'package:craftybay/Presentation/UI/Utility/color_palette.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../State holders/Home_silder_controller.dart';
+import '../../State holders/product_controller.dart';
 import 'Product_list_screen.dart';
 
 class NavigationBarButton extends StatefulWidget {
@@ -25,6 +26,9 @@ class _NavigationBarButtonState extends State<NavigationBarButton> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Get.find<HomeSliderController>().getHomeSlider();
       Get.find<CategoryController>().getCategory();
+      Get.find<ProductController>().getPopularProduct();
+      Get.find<ProductController>().getSpecialProduct();
+      Get.find<ProductController>().getNewProduct();
 
     });
     // TODO: implement initState

@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
-
 import '../model/network_respons.dart';
 
 class NetworkCaller {
